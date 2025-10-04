@@ -1,0 +1,85 @@
+"$schema" = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
+version = 3
+final_space = true
+shell_integration = true
+enable_cursor_positioning = true
+
+[palette]
+    # Dracula theme colors
+    black   = '#282a36'
+    cyan    = '#8be9fd'
+    blue    = '#4b95e9'
+    green   = '#50fa7b'
+    orange  = '#ffb86c'
+    red     = '#ff5555'
+    pink    = '#ff79c6'
+    purple  = '#bd93f9'
+    white   = '#ffffff'
+    yellow  = '#f3ae35'
+    comment = '#6272a4'
+
+    # These are my preferences for mode-based themeing.
+    normal  = '#bd93f9'
+    visual  = '#f3ae35'
+    replace = '#ffb86c'
+    command = '#f1fa8c'
+    error   = 'ff5555'
+    notice  = '#8be9fd'
+    ok      = '#50fa7b'
+
+[upgrade]
+    source   = 'cdn'
+    interval = '168h'
+    auto     = false
+    notice   = false
+
+[transient_prompt]
+    background = "transparent"
+    foreground_templates = [
+        "{{if gt .Code 0}}p:error{{end}}",
+        "{{if eq .Code 0}}p:ok{{end}}",
+    ]
+    template = "❯ "
+
+[[blocks]]
+    type              = 'prompt'
+    alignment         = 'left'
+    segment_separator = " "
+
+    [[blocks.segments]]
+        type             = "text"
+        style            = "diamond"
+        foreground       = "p:black"
+        background       = "p:normal"
+        leading_diamond  = ""
+        trailing_diamond = " "
+        templates        = [
+            "{{if .Env.SSH_CONNECTION }} {{ .HostName }} {{end}}",
+        ]
+
+        [blocks.segments.properties]
+            display_host = true
+
+    [[blocks.segments]]
+        type       = 'path'
+        style      = 'plain'
+        foreground = 'p:pink'
+        template   = "{{ .Path }}"
+
+        [blocks.segments.properties]
+            style                 = "full"
+            folder_separator_icon = ""
+
+    [[blocks.segments]]
+        type                 = 'text'
+        style                = 'plain'
+        template             = ""
+        foreground_templates = [
+            "{{if contains \"NORMAL\" .Env.POSH_VI_MODE}}p:normal{{end}}",
+            "{{if contains \"INSERT\" .Env.POSH_VI_MODE}}p:green{{end}}",
+            "{{if contains \"VISUAL\" .Env.POSH_VI_MODE}}p:visual{{end}}",
+            "{{if contains \"V-LINE\" .Env.POSH_VI_MODE}}p:visual{{end}}",
+            "{{if contains \"REPLACE\" .Env.POSH_VI_MODE}}p:orange{{end}}",
+        ]
+

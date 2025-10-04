@@ -1,0 +1,77 @@
+/* Dracula Pro Van Helsing Theme */
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", "FontAwesome", monospace;
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: #282c34;
+    color: #f8f8f2;
+}
+
+/* Workspaces */
+#workspaces button {
+    padding: 0 8px;
+    background: transparent;
+    color: #f8f8f2;
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button.active {
+    background: linear-gradient(90deg, #9580ff 0%, #ff80bf 100%);
+    color: #0b0d0f;
+    font-weight: bold;
+}
+
+#workspaces button.urgent {
+    background: #ff9580;
+    color: #0b0d0f;
+}
+
+#workspaces button:hover {
+    background: #414d58;
+    color: #f8f8f2;
+}
+
+/* Window title */
+#window {
+    padding: 0 10px;
+    color: #9580ff;
+}
+
+/* Custom prompt (center) */
+#custom-prompt {
+    padding: 0 10px;
+    color: #8aff80;
+    font-weight: bold;
+}
+
+/* Cava visualizer */
+#custom-cava {
+    padding: 0 10px;
+    color: #9580ff;
+    font-family: monospace;
+}
+
+/* Clock */
+#clock {
+    padding: 0 10px;
+    color: #ff80bf;
+    font-weight: bold;
+}
+
+#tray {
+    background: transparent;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background: #ff9580;
+}

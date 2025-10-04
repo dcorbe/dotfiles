@@ -1,0 +1,63 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "spacing": 4,
+
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["custom/prompt", "custom/cava"],
+    "modules-right": ["clock", "tray"],
+
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        "all-outputs": true,
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": []
+        }
+    },
+
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 50,
+        "separate-outputs": true
+    },
+
+    "custom/prompt": {
+        "exec": "echo $USER@$(hostname)",
+        "interval": "once",
+        "tooltip": false
+    },
+
+    "custom/cava": {
+        "exec": "~/.config/waybar/cava.sh",
+        "tooltip": false
+    },
+
+    "clock": {
+        "format": "{:%H:%M:%S   %Y-%m-%d}",
+        "interval": 1,
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "year",
+            "mode-mon-col": 3,
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#9580ff'><b>{}</b></span>",
+                "days": "<span color='#f8f8f2'><b>{}</b></span>",
+                "weeks": "<span color='#8aff80'><b>W{}</b></span>",
+                "weekdays": "<span color='#ff80bf'><b>{}</b></span>",
+                "today": "<span color='#ff9580'><b><u>{}</u></b></span>"
+            }
+        }
+    },
+
+    "tray": {
+        "spacing": 10
+    }
+}

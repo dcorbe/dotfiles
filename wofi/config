@@ -1,0 +1,13 @@
+mode=drun
+width=600
+height=400
+prompt=Search Applications
+allow_markup=true
+allow_images=true
+image_size=24
+term=foot
+insensitive=true
+matching=contains
+sort_order=default
+orientation=vertical
+gtk_dark=true
