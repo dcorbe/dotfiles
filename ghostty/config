@@ -1,0 +1,13 @@
+font-family = JetBrainsMono Nerd Font Mono
+font-size = 10
+background = #22212B
+shell-integration = zsh
+# window-decoration = none
+cursor-style = underline
+mouse-hide-while-typing = true
+keybind=super+s=text:\x13
+cursor-invert-fg-bg = true
+bold-is-bright = true
+
+keybind = shift+enter=text:\x1b\r
+
