@@ -32,6 +32,41 @@ vim.diagnostic.config({
 
 vim.keymap.set('n', '<leader>t', ':Neotree toggle<CR>', { silent = true })
 
+
+-- Make .eml files use the mail filetype
+  vim.filetype.add({
+    extension = {
+      eml = 'mail',
+    },
+  })
+
+  -- Configure mail-specific settings and auto-reformat
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "mail",
+    callback = function()
+      vim.opt_local.textwidth = 72      -- Wrap at 72 characters
+      vim.opt_local.formatoptions = "tcqwan"  -- Auto-wrap text, handle quotes
+      vim.opt_local.comments = "n:>"    -- Handle email quote markers
+      vim.opt_local.spell = true        -- Enable spell checking
+
+      -- Auto-reformat only the email body (after headers)
+      -- Find the first blank line (RFC 5322 header/body separator)
+      local first_blank = vim.fn.search('^$', 'n')
+      if first_blank > 0 and first_blank < vim.fn.line('$') then
+        -- Format from line after blank line to end of file
+        vim.cmd(string.format('normal! %dGgqG', first_blank + 1))
+        -- Return cursor to top of file
+        vim.cmd('normal! gg')
+      else
+        -- No blank line found or blank is last line, don't format
+        vim.cmd('normal! gg')
+      end
+    end,
+  })
+
+
+
+
 -- This comes last
 vim.cmd[[highlight Normal guibg=#22212B ctermbg=235]]
 vim.cmd[[highlight CursorLineNr guifg=#ff79c6 ctermfg=212]]
@@ -42,10 +77,5 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find f
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
-
--- Start interactive EasyAlign in visual mode (e.g. vipga)
-vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)', {})
-
--- Start interactive EasyAlign for a motion/text object (e.g. gaip)
-vim.keymap.set('n', 'ga', '<Plug>(EasyAlign)', {})
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { silent = true, desc = 'Clear search highlighting' })
 

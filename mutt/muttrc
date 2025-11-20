@@ -1,0 +1,92 @@
+set from = "daniel@corbe.net"
+alternates "dcorbe@gmail.com|corbe@corbe.net|dcorbe@bridgesecuritysolutions.com"
+set realname = "Daniel Corbe"
+set query_command = "notmuch-addrlookup --format=mutt '%s'"
+set alias_sort = unsorted
+bind editor <Tab> complete-query
+bind editor ^T complete
+unset nm_record
+
+set nm_unread_tag = unread
+set mark_old = no
+
+# Editor
+set editor="nvim"
+
+# Header Cache
+set header_cache = ~/.mutt/cache
+set message_cachedir = ~/.mutt/messages
+
+# Address Book
+#set query_command="notmuch-addrlookup --format=mutt '%s'"
+
+# Sync mail
+macro index S "<shell-escape>mbsync -a<enter><shell-escape>notmuch new<enter>" "sync email"
+
+# Purty
+source ~/.config/mutt/dracula.muttrc
+
+# Bind arrow keys for virtual folder pane
+bind index J sidebar-prev
+bind index L sidebar-next
+bind index K sidebar-open
+set sidebar_visible = no
+set sidebar_width = 30
+
+# Pager bindings - arrow keys scroll, not change messages
+bind pager <Up> previous-line
+bind pager <Down> next-line
+bind pager <Left> exit
+bind pager <Right> noop
+macro pager d '<delete-message><exit>'
+
+set nm_default_url = "notmuch:///Users/daniel/.mail"
+# Disable checking for a mail folder - we're 100% notmuch
+unset folder
+set mbox_type = Maildir
+
+virtual-mailboxes "Inbox" "notmuch://?query=tag:unread AND NOT tag:trash"
+virtual-mailboxes "Drafts" "notmuch://?query=tag:draft"
+virtual-mailboxes "Sent" "notmuch://?query=tag:sent"
+virtual-mailboxes "Trash" "notmuch://?query=tag:trash"
+set sendmail = "msmtp"
+set use_from=yes
+set envelope_from=yes
+
+# mailbox settings
+set spoolfile = "notmuch://?query=tag:unread AND NOT tag:trash"
+set postponed = "notmuch://?query=tag:draft"
+set record = "notmuch://?query=tag:sent"
+# unset trash - don't move deleted messages, just tag them
+unset trash
+set delete = yes
+set nm_exclude_tags = "trash"
+macro index d "<modify-labels-then-hide>+trash -inbox -unread<enter>"
+
+# PGP stuffs
+# set crypt_use_gpgme=yes
+# set postpone_encrypt = yes
+# set pgp_self_encrypt = yes
+# set crypt_use_pka = no
+# set crypt_autosign = yes
+# set crypt_autoencrypt = no
+# set crypt_autopgp = yes
+# set pgp_sign_as=0x8E96B69A30C1993B
+
+# Other stuffs
+set mail_check_stats
+set sort=threads
+set sort_aux = 'reverse-last-date-received'
+set pager_stop = yes
+set markers = no
+set mime_forward = yes
+set wait_key = no
+set fast_reply
+set forward_format = "Fwd: %s"
+set forward_quote
+set include
+set reverse_name
+
+auto_view text/html
+set mailcap_path = ~/.config/mutt/mailcap
+

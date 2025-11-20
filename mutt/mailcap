@@ -1,0 +1,18 @@
+# HTML emails - render with w3m
+text/html; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html; copiousoutput
+
+# Alternative: open HTML in browser (use 'v' to view attachments, then select)
+# text/html; open -a Safari %s; nametemplate=%s.html
+# text/html; open %s; nametemplate=%s.html
+
+# PDF files
+application/pdf; open %s; nametemplate=%s.pdf
+
+# Images
+image/*; open %s; nametemplate=%s
+
+# Office documents
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; open %s; nametemplate=%s.docx
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; open %s; nametemplate=%s.xlsx
+application/msword; open %s; nametemplate=%s.doc
+application/vnd.ms-excel; open %s; nametemplate=%s.xls
