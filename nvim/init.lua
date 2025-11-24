@@ -30,9 +30,6 @@ vim.diagnostic.config({
   severity_sort = true,
 })
 
-vim.keymap.set('n', '<leader>t', ':Neotree toggle<CR>', { silent = true })
-
-
 -- Make .eml files use the mail filetype
   vim.filetype.add({
     extension = {
