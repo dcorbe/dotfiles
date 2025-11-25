@@ -35,5 +35,6 @@ return {
         map("n", "<leader>fg", fzf.live_grep, { desc = "Live grep" })
         map("n", "<leader>fb", fzf.buffers, { desc = "Buffers" })
         map("n", "<leader>fh", fzf.help_tags, { desc = "Help tags" })
+        map("n", "<leader>fk", fzf.keymaps, { desc = "Keymaps" })
     end,
 }
