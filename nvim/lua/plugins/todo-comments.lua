@@ -54,7 +54,7 @@ return {
     keys = {
         {
             "<leader>ft",
-            "<cmd>TodoTelescope<cr>",
+            "<cmd>TodoFzfLua<cr>",
             desc = "Find TODOs",
         },
         {

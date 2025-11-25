@@ -1,7 +1,7 @@
 return {
     "gbprod/yanky.nvim",
     dependencies = {
-        "nvim-telescope/telescope.nvim",
+        "ibhagwan/fzf-lua",
     },
     keys = {
         { "y", mode = { "n", "x" } },
@@ -15,7 +15,6 @@ return {
     },
     config = function()
         local yanky = require("yanky")
-        local telescope = require("telescope")
 
         -- Configure yanky
         yanky.setup({
@@ -27,9 +26,8 @@ return {
                 ignore_registers = { "_" },
             },
             picker = {
-                telescope = {
-                    use_default_mappings = true,
-                    mappings = nil,
+                select = {
+                    action = nil,
                 },
             },
             system_clipboard = {
@@ -45,9 +43,6 @@ return {
             },
         })
 
-        -- Load Telescope extension
-        telescope.load_extension("yank_history")
-
         -- Set up keymaps
         local map = vim.keymap.set
 
@@ -62,9 +57,10 @@ return {
         map("n", "<c-p>", "<Plug>(YankyCycleForward)", { desc = "Cycle forward through yank history" })
         map("n", "<c-n>", "<Plug>(YankyCycleBackward)", { desc = "Cycle backward through yank history" })
 
-        -- Open yank history in Telescope
+        -- Open yank history in fzf-lua
         map("n", "<leader>p", function()
-            telescope.extensions.yank_history.yank_history({})
+            require("fzf-lua").register_ui_select()
+            yanky.yank_history.yank_history()
         end, { desc = "Yank history" })
     end,
 }

@@ -3,7 +3,7 @@ return {
     dependencies = {
         "nvim-lua/plenary.nvim",
         "sindrets/diffview.nvim",
-        "nvim-telescope/telescope.nvim",
+        "ibhagwan/fzf-lua",
     },
     cmd = "Neogit",
     keys = {
@@ -27,7 +27,7 @@ return {
         -- Press ? inside neogit to see all available commands
         integrations = {
             diffview = true,
-            telescope = true,
+            fzf_lua = true,
         },
         -- Simplified sections config - just set what should be hidden by default
         sections = {
