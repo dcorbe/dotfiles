@@ -25,6 +25,7 @@ return {
     opts = {
         -- Use default keybindings (they're good!)
         -- Press ? inside neogit to see all available commands
+        disable_insert_on_commit = true,
         integrations = {
             diffview = true,
             fzf_lua = true,
