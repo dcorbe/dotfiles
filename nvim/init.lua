@@ -17,6 +17,7 @@ opt.cursorline = true
 opt.autoread = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
+vim.opt.fillchars:append({ vert = ' ' })
 
 require ("config.lazy")
 
