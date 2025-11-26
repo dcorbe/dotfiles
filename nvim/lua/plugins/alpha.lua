@@ -3,6 +3,7 @@ return {
     dependencies = {
         "nvim-tree/nvim-web-devicons",
         "MaximilianLloyd/ascii.nvim",
+        "folke/which-key.nvim",
     },
     event = "VimEnter",
     config = function()
@@ -13,15 +14,13 @@ return {
         -- Random ASCII art header
         dashboard.section.header.val = ascii.get_random_global()
 
-        -- Menu buttons
+        -- Essential buttons
         dashboard.section.buttons.val = {
             dashboard.button("f", "  Find file", ":FzfLua files<CR>"),
             dashboard.button("r", "  Recent files", ":FzfLua oldfiles<CR>"),
             dashboard.button("g", "  Grep text", ":FzfLua live_grep<CR>"),
-            dashboard.button("c", "  Config", ":e $MYVIMRC<CR>"),
+            dashboard.button("-", "  File explorer", ":Oil<CR>"),
             dashboard.button("p", "  Plugins", ":Lazy<CR>"),
-            dashboard.button("m", "  Mason", ":Mason<CR>"),
-            dashboard.button("a", "  ASCII art", ":AsciiPreview<CR>"),
             dashboard.button("q", "  Quit", ":qa<CR>"),
         }
 

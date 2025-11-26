@@ -6,7 +6,7 @@ return {
     end,
     cmd = { "Dbee" },
     keys = {
-        { "<leader>db", function() require("dbee").toggle() end, desc = "Toggle DB explorer" },
+        { "<leader>DB", function() require("dbee").toggle() end, desc = "Toggle DB explorer" },
     },
     opts = {},
 }
