@@ -1,3 +1,5 @@
+vim.loader.enable()
+
 -- Tell the linter that vim is a valid global
 _G.vim = vim
 
