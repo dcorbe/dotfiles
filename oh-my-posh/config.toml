@@ -24,7 +24,7 @@ enable_cursor_positioning = true
     visual  = '#f3ae35'
     replace = '#ffb86c'
     command = '#f1fa8c'
-    error   = 'ff5555'
+    error   = '#ff5555'
     notice  = '#8be9fd'
     ok      = '#50fa7b'
 
