@@ -17,6 +17,8 @@ opt.termguicolors = true
 opt.clipboard:append("unnamedplus")
 opt.cursorline = true
 opt.autoread = true
+opt.spell = true
+opt.spelllang = 'en_us'
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.opt.fillchars:append({ vert = ' ' })
@@ -47,7 +49,6 @@ vim.diagnostic.config({
       vim.opt_local.textwidth = 72      -- Wrap at 72 characters
       vim.opt_local.formatoptions = "tcqwan"  -- Auto-wrap text, handle quotes
       vim.opt_local.comments = "n:>"    -- Handle email quote markers
-      vim.opt_local.spell = true        -- Enable spell checking
 
       -- Auto-reformat only the email body (after headers)
       -- Find the first blank line (RFC 5322 header/body separator)
@@ -64,14 +65,6 @@ vim.diagnostic.config({
     end,
   })
 
-  -- Enable spell checking for git commits
-  vim.api.nvim_create_autocmd("FileType", {
-    pattern = "gitcommit",
-    callback = function()
-      vim.opt_local.spell = true
-      vim.opt_local.spelllang = 'en_us'
-    end,
-  })
 
 
 -- This comes last
