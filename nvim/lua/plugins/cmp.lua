@@ -32,7 +32,12 @@ return {
                 },
             },
             enabled = function()
-                return cmp_enabled
+                if not cmp_enabled then return false end
+                local context = require('cmp.config.context')
+                if context.in_treesitter_capture('comment') or context.in_treesitter_capture('string') then
+                    return false
+                end
+                return true
             end,
             mapping = cmp.mapping.preset.insert({
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
