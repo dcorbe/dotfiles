@@ -147,6 +147,27 @@ return {
       },
     })
 
+    -- JSON
+    vim.lsp.config('jsonls', {
+      cmd = { 'vscode-json-language-server', '--stdio' },
+      root_markers = { '.git' },
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = {
+        json = {
+          validate = { enable = true },
+        },
+      },
+    })
+
+    -- TOML
+    vim.lsp.config('taplo', {
+      cmd = { 'taplo', 'lsp', 'stdio' },
+      root_markers = { '.git' },
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
     -- Enable non-Rust servers (Rust handled by rustaceanvim)
     vim.lsp.enable('lua_ls')
     vim.lsp.enable('vtsls')
@@ -158,6 +179,8 @@ return {
     vim.lsp.enable('gopls')
     vim.lsp.enable('dockerls')
     vim.lsp.enable('yamlls')
+    vim.lsp.enable('jsonls')
+    vim.lsp.enable('taplo')
 
     -- Format Python on save
     vim.api.nvim_create_autocmd('BufWritePre', {
