@@ -8,6 +8,15 @@ return {
   config = function()
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+    -- Global on_attach for all LSP servers
+    local on_attach = function(client, bufnr)
+      if client.server_capabilities.inlayHintProvider then
+        vim.keymap.set('n', '<leader>ih', function()
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+        end, { buffer = bufnr, desc = 'Toggle inlay hints' })
+      end
+    end
+
     -- NOTE: Rust is handled by rustaceanvim in rust.lua - DO NOT configure here
 
     -- Lua
@@ -15,6 +24,7 @@ return {
       cmd = { 'lua-language-server' },
       root_markers = { '.luarc.json', '.stylua.toml' },
       capabilities = capabilities,
+      on_attach = on_attach,
       settings = {
         Lua = {
           diagnostics = { globals = { 'vim' } },
@@ -27,6 +37,7 @@ return {
       cmd = { 'vtsls', '--stdio' },
       root_markers = { 'package.json', 'tsconfig.json' },
       capabilities = capabilities,
+      on_attach = on_attach,
       settings = {
         typescript = {
           inlayHints = {
@@ -44,6 +55,7 @@ return {
       cmd = { 'tailwindcss-language-server', '--stdio' },
       root_markers = { 'tailwind.config.js', 'tailwind.config.ts' },
       capabilities = capabilities,
+      on_attach = on_attach,
     })
 
     -- ESLint
@@ -51,6 +63,7 @@ return {
       cmd = { 'vscode-eslint-language-server', '--stdio' },
       root_markers = { '.eslintrc', '.eslintrc.js', 'eslint.config.js' },
       capabilities = capabilities,
+      on_attach = on_attach,
     })
 
     -- Python
@@ -58,11 +71,18 @@ return {
       cmd = { 'basedpyright-langserver', '--stdio' },
       root_markers = { 'pyproject.toml', 'setup.py', 'requirements.txt' },
       capabilities = capabilities,
+      on_attach = on_attach,
       settings = {
         basedpyright = {
           analysis = {
             typeCheckingMode = 'standard',
             autoImportCompletions = true,
+            inlayHints = {
+              variableTypes = true,
+              functionReturnTypes = true,
+              callArgumentNames = true,
+              pytestParameters = true,
+            },
           },
         },
       },
@@ -72,6 +92,7 @@ return {
       cmd = { 'ruff', 'server' },
       root_markers = { 'pyproject.toml', 'ruff.toml' },
       capabilities = capabilities,
+      on_attach = on_attach,
     })
 
     -- Enable non-Rust servers (Rust handled by rustaceanvim)
