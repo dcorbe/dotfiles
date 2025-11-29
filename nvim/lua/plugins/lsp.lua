@@ -95,6 +95,14 @@ return {
       on_attach = on_attach,
     })
 
+    -- C/C++
+    vim.lsp.config('clangd', {
+      cmd = { 'clangd' },
+      root_markers = { '.clangd', 'compile_commands.json', 'compile_flags.txt', '.git' },
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
     -- Enable non-Rust servers (Rust handled by rustaceanvim)
     vim.lsp.enable('lua_ls')
     vim.lsp.enable('vtsls')
@@ -102,6 +110,7 @@ return {
     vim.lsp.enable('eslint')
     vim.lsp.enable('basedpyright')
     vim.lsp.enable('ruff')
+    vim.lsp.enable('clangd')
 
     -- Format Python on save
     vim.api.nvim_create_autocmd('BufWritePre', {

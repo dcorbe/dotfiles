@@ -25,6 +25,7 @@ return {
           "eslint",
           "basedpyright",
           "ruff",
+          "clangd",
         },
         -- NOTE: rust_analyzer NOT here - using rustup's version
         automatic_installation = true,
