@@ -103,6 +103,50 @@ return {
       on_attach = on_attach,
     })
 
+    -- Go
+    vim.lsp.config('gopls', {
+      cmd = { 'gopls' },
+      root_markers = { 'go.mod', 'go.work', '.git' },
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = {
+        gopls = {
+          hints = {
+            parameterNames = true,
+            assignVariableTypes = true,
+            compositeLiteralTypes = true,
+            constantValues = true,
+            functionTypeParameters = true,
+            rangeVariableTypes = true,
+          },
+        },
+      },
+    })
+
+    -- Dockerfile
+    vim.lsp.config('dockerls', {
+      cmd = { 'docker-langserver', '--stdio' },
+      root_markers = { 'Dockerfile', '.git' },
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- YAML (docker-compose, GitHub Actions, k8s, etc.)
+    vim.lsp.config('yamlls', {
+      cmd = { 'yaml-language-server', '--stdio' },
+      root_markers = { '.git' },
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = {
+        yaml = {
+          schemaStore = {
+            enable = true,
+            url = 'https://www.schemastore.org/api/json/catalog.json',
+          },
+        },
+      },
+    })
+
     -- Enable non-Rust servers (Rust handled by rustaceanvim)
     vim.lsp.enable('lua_ls')
     vim.lsp.enable('vtsls')
@@ -111,6 +155,9 @@ return {
     vim.lsp.enable('basedpyright')
     vim.lsp.enable('ruff')
     vim.lsp.enable('clangd')
+    vim.lsp.enable('gopls')
+    vim.lsp.enable('dockerls')
+    vim.lsp.enable('yamlls')
 
     -- Format Python on save
     vim.api.nvim_create_autocmd('BufWritePre', {
