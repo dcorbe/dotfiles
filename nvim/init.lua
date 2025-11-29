@@ -19,6 +19,15 @@ opt.cursorline = true
 opt.autoread = true
 opt.spell = true
 opt.spelllang = 'en_us'
+
+-- Disable spell checking for shell files (too much jargon)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "zsh", "sh", "bash" },
+  callback = function()
+    vim.opt_local.spell = false
+  end,
+})
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.opt.fillchars:append({ vert = ' ' })
