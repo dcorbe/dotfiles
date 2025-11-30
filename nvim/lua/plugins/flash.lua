@@ -44,9 +44,9 @@ return {
         },
         -- Action modes
         modes = {
-            -- Flash search
+            -- Flash search (disabled by default, toggle with <leader>/)
             search = {
-                enabled = true,
+                enabled = false,
             },
             -- Character search (f/t/F/T)
             char = {
@@ -106,7 +106,7 @@ return {
             desc = "Treesitter Search",
         },
         {
-            "<c-s>",
+            "<leader>/",
             mode = { "c" },
             function()
                 require("flash").toggle()
