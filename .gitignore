@@ -29,4 +29,5 @@ mimeapps.list
 pnpm
 pulse/
 pypoetry/
+.zcompdump*
 
