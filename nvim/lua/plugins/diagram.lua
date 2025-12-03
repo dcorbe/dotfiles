@@ -9,7 +9,7 @@ return {
       mermaid = {
         background = "transparent",
         theme = "dark",
-        scale = 2,
+        scale = 6,
       },
     },
   },
