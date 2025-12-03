@@ -1,23 +1,27 @@
+-- Shared LSP helpers (used by both lspconfig and rustaceanvim)
+local function get_capabilities()
+  return require('cmp_nvim_lsp').default_capabilities()
+end
+
+local function on_attach(client, bufnr)
+  if client.server_capabilities.inlayHintProvider then
+    vim.keymap.set('n', '<leader>ih', function()
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+    end, { buffer = bufnr, desc = 'Toggle inlay hints' })
+  end
+end
+
 return {
-  "neovim/nvim-lspconfig",
-  dependencies = {
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    "hrsh7th/cmp-nvim-lsp",
-  },
-  config = function()
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-    -- Global on_attach for all LSP servers
-    local on_attach = function(client, bufnr)
-      if client.server_capabilities.inlayHintProvider then
-        vim.keymap.set('n', '<leader>ih', function()
-          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-        end, { buffer = bufnr, desc = 'Toggle inlay hints' })
-      end
-    end
-
-    -- NOTE: Rust is handled by rustaceanvim in rust.lua - DO NOT configure here
+  -- Main LSP configuration
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "hrsh7th/cmp-nvim-lsp",
+    },
+    config = function()
+      local capabilities = get_capabilities()
 
     -- Lua
     vim.lsp.config('lua_ls', {
@@ -190,4 +194,35 @@ return {
       end,
     })
   end,
+  },
+
+  -- Rust (rustaceanvim handles rust-analyzer with extra features)
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^6',
+    dependencies = {
+      'mfussenegger/nvim-dap',
+      'hrsh7th/cmp-nvim-lsp',
+    },
+    init = function()
+      vim.g.rustaceanvim = {
+        server = {
+          on_attach = on_attach,
+          capabilities = get_capabilities(),
+          default_settings = {
+            ['rust-analyzer'] = {
+              check = { command = 'clippy' },
+              inlayHints = {
+                chainingHints = { enable = true },
+                typeHints = { enable = true },
+                parameterHints = { enable = true },
+              },
+              cargo = { allFeatures = true },
+              procMacro = { enable = true },
+            },
+          },
+        },
+      }
+    end,
+  },
 }
