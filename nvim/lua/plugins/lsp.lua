@@ -172,7 +172,15 @@ return {
       on_attach = on_attach,
     })
 
-    -- Enable non-Rust servers (Rust handled by rustaceanvim)
+    -- HTML (also used by rzls for Razor)
+    vim.lsp.config('html', {
+      cmd = { 'vscode-html-language-server', '--stdio' },
+      root_markers = { '.git' },
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- Enable servers (Rust/C# handled by dedicated plugins)
     vim.lsp.enable('lua_ls')
     vim.lsp.enable('vtsls')
     vim.lsp.enable('tailwindcss')
@@ -185,6 +193,7 @@ return {
     vim.lsp.enable('yamlls')
     vim.lsp.enable('jsonls')
     vim.lsp.enable('taplo')
+    vim.lsp.enable('html')
 
     -- Format Python on save
     vim.api.nvim_create_autocmd('BufWritePre', {
@@ -223,6 +232,57 @@ return {
           },
         },
       }
+    end,
+  },
+
+  -- C# (roslyn.nvim + rzls.nvim for Razor)
+  {
+    'seblyng/roslyn.nvim',
+    ft = { 'cs', 'razor' },
+    dependencies = {
+      {
+        'tris203/rzls.nvim',
+        config = function()
+          require('rzls').setup({
+            capabilities = get_capabilities(),
+            on_attach = on_attach,
+          })
+        end,
+      },
+    },
+    opts = {
+      broad_search = true,
+    },
+    config = function(_, opts)
+      -- Configure roslyn LSP settings
+      vim.lsp.config('roslyn', {
+        on_attach = on_attach,
+        capabilities = get_capabilities(),
+        settings = {
+          ['csharp|inlay_hints'] = {
+            csharp_enable_inlay_hints_for_implicit_object_creation = true,
+            csharp_enable_inlay_hints_for_implicit_variable_types = true,
+            csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+            csharp_enable_inlay_hints_for_types = true,
+            dotnet_enable_inlay_hints_for_indexer_parameters = true,
+            dotnet_enable_inlay_hints_for_literal_parameters = true,
+            dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+            dotnet_enable_inlay_hints_for_other_parameters = true,
+            dotnet_enable_inlay_hints_for_parameters = true,
+          },
+          ['csharp|code_lens'] = {
+            dotnet_enable_references_code_lens = true,
+            dotnet_enable_tests_code_lens = true,
+          },
+        },
+      })
+
+      -- Merge rzls handlers into opts
+      opts.config = {
+        handlers = require('rzls.roslyn_handlers'),
+      }
+
+      require('roslyn').setup(opts)
     end,
   },
 }

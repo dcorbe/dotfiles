@@ -3,6 +3,10 @@ return {
     "williamboman/mason.nvim",
     config = function()
       require("mason").setup({
+        registries = {
+          "github:mason-org/mason-registry",
+          "github:Crashdummyy/mason-registry", -- roslyn + rzls
+        },
         ui = {
           icons = {
             package_installed = "",
@@ -31,6 +35,7 @@ return {
           "yamlls",
           "jsonls",
           "taplo",
+          "html",
         },
         automatic_installation = true,
       })
