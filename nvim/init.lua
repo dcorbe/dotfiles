@@ -19,6 +19,7 @@ opt.cursorline = true
 opt.autoread = true
 opt.spell = true
 opt.spelllang = 'en_us'
+opt.conceallevel = 2
 
 -- Disable spell checking for shell files (too much jargon)
 vim.api.nvim_create_autocmd("FileType", {
