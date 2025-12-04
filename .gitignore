@@ -30,4 +30,5 @@ pnpm
 pulse/
 pypoetry/
 .zcompdump*
+lazy-lock.json
 
