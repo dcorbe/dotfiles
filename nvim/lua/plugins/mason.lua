@@ -15,6 +15,21 @@ return {
           },
         },
       })
+
+      -- Ensure non-LSP tools are installed (DAP adapters, etc.)
+      local ensure_installed = {
+        'java-debug-adapter',
+        'java-test',
+      }
+      local mr = require('mason-registry')
+      mr.refresh(function()
+        for _, tool in ipairs(ensure_installed) do
+          local pkg = mr.get_package(tool)
+          if not pkg:is_installed() then
+            pkg:install()
+          end
+        end
+      end)
     end,
   },
   {
@@ -37,6 +52,7 @@ return {
           "taplo",
           "html",
           "zls",
+          "jdtls",
         },
         automatic_installation = true,
       })
