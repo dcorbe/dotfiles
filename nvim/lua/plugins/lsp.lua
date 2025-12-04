@@ -180,6 +180,20 @@ return {
       on_attach = on_attach,
     })
 
+    -- Zig
+    vim.lsp.config('zls', {
+      cmd = { 'zls' },
+      root_markers = { 'build.zig', 'zls.json', '.git' },
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = {
+        zls = {
+          enable_inlay_hints = true,
+          inlay_hints_hide_redundant_param_names = true,
+        },
+      },
+    })
+
     -- Enable servers (Rust/C# handled by dedicated plugins)
     vim.lsp.enable('lua_ls')
     vim.lsp.enable('vtsls')
@@ -194,6 +208,7 @@ return {
     vim.lsp.enable('jsonls')
     vim.lsp.enable('taplo')
     vim.lsp.enable('html')
+    vim.lsp.enable('zls')
 
     -- Format Python on save
     vim.api.nvim_create_autocmd('BufWritePre', {

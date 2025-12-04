@@ -36,6 +36,7 @@ return {
           "jsonls",
           "taplo",
           "html",
+          "zls",
         },
         automatic_installation = true,
       })
