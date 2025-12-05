@@ -19,6 +19,7 @@ return {
             { "<leader>n", group = "narrow" },
             { "<leader>s", group = "swap" },
             { "<leader>t", group = "toggle/test" },
+            { "<leader>x", group = "trouble" },
         },
     },
     keys = {
