@@ -194,6 +194,30 @@ return {
       },
     })
 
+    -- Grammar/spelling (harper-ls)
+    vim.lsp.config('harper_ls', {
+      cmd = { 'harper-ls', '--stdio' },
+      root_markers = { '.git' },
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = {
+        ['harper-ls'] = {
+          linters = {
+            spell_check = true,
+            spelled_numbers = false,
+            an_a = true,
+            sentence_capitalization = true,
+            unclosed_quotes = true,
+            wrong_quotes = false,
+            long_sentences = true,
+            repeated_words = true,
+            spaces = true,
+            matcher = true,
+          },
+        },
+      },
+    })
+
     -- Enable servers (Rust/C# handled by dedicated plugins)
     vim.lsp.enable('lua_ls')
     vim.lsp.enable('vtsls')
@@ -209,6 +233,7 @@ return {
     vim.lsp.enable('taplo')
     vim.lsp.enable('html')
     vim.lsp.enable('zls')
+    vim.lsp.enable('harper_ls')
 
     -- Format Python on save
     vim.api.nvim_create_autocmd('BufWritePre', {

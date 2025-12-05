@@ -17,7 +17,7 @@ opt.termguicolors = true
 opt.clipboard:append("unnamedplus")
 opt.cursorline = true
 opt.autoread = true
-opt.spell = true
+opt.spell = false  -- disabled while testing harper-ls
 opt.spelllang = 'en_us'
 opt.conceallevel = 2
 
@@ -42,9 +42,9 @@ require ("config.lazy")
 -- Configure diagnostics
 vim.g.skip_ts_context_commentstring_module = true
 vim.diagnostic.config({
-  virtual_text = false,
+  virtual_text = true,
   signs = true,
-  underline = false,
+  underline = true,
   update_in_insert = false,
   severity_sort = true,
 })
