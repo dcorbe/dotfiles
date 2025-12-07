@@ -1,22 +1,15 @@
-return {
-  "MeanderingProgrammer/render-markdown.nvim",
-  dependencies = {
-    "nvim-treesitter/nvim-treesitter",
-    "nvim-tree/nvim-web-devicons",
+-- Render markdown
+require("render-markdown").setup({
+  heading = {
+    icons = { "󰎤 ", "󰎧 ", "󰎪 ", "󰎭 ", "󰎱 ", "󰎳 " },
   },
-  ft = { "markdown" },
-  opts = {
-    heading = {
-      icons = { "󰎤 ", "󰎧 ", "󰎪 ", "󰎭 ", "󰎱 ", "󰎳 " },
-    },
-    code = {
-      sign = false,
-      width = "block",
-      right_pad = 1,
-    },
-    checkbox = {
-      unchecked = { icon = "󰄱 " },
-      checked = { icon = "󰄵 " },
-    },
+  code = {
+    sign = false,
+    width = "block",
+    right_pad = 1,
   },
-}
+  checkbox = {
+    unchecked = { icon = "󰄱 " },
+    checked = { icon = "󰄵 " },
+  },
+})

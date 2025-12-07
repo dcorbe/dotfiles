@@ -1,3 +1,1 @@
-return {
-    'junegunn/vim-easy-align'
-}
+-- vim-easy-align (no setup needed, works out of the box)

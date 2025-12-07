@@ -31,4 +31,5 @@ pulse/
 pypoetry/
 .zcompdump*
 lazy-lock.json
+nvim/pack/
 

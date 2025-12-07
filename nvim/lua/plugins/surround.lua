@@ -1,4 +1,1 @@
-return {
-    "tpope/vim-surround"
-}
-
+-- vim-surround (no setup needed, works out of the box)

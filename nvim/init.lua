@@ -37,7 +37,8 @@ vim.opt.fillchars:append({ vert = ' ' })
 package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua"
 package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua"
 
-require ("config.lazy")
+-- Load plugins (native pack with manual setup)
+require("plugins")
 
 -- Configure diagnostics
 vim.g.skip_ts_context_commentstring_module = true

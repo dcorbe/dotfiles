@@ -1,7 +1,2 @@
-return {
-  "esmuellert/vscode-diff.nvim",
-  dependencies = { "MunifTanjim/nui.nvim" },
-  keys = {
-    { "<leader>gD", "<cmd>CodeDiff<cr>", desc = "VSCode Diff" },
-  },
-}
+-- VSCode Diff
+vim.keymap.set("n", "<leader>gD", "<cmd>CodeDiff<cr>", { desc = "VSCode Diff" })
