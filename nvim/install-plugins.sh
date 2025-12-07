@@ -1,10 +1,11 @@
 #!/bin/bash
-# Plugin installation script - adds all plugins as git submodules
+# Plugin installation script - clones plugins into pack/plugins/start
 set -e
 
-cd "$(dirname "$0")/.."  # Go to ~/.config
+cd "$(dirname "$0")"
 
-PACK_DIR="nvim/pack/plugins/start"
+PACK_DIR="pack/plugins/start"
+mkdir -p "$PACK_DIR"
 
 add_plugin() {
     local repo=$1
@@ -16,11 +17,11 @@ add_plugin() {
         return
     fi
 
-    echo "Adding $name..."
+    echo "Cloning $name..."
     if [ -n "$branch" ]; then
-        git submodule add -b "$branch" "https://github.com/$repo.git" "$PACK_DIR/$name"
+        git clone --depth 1 -b "$branch" "https://github.com/$repo.git" "$PACK_DIR/$name"
     else
-        git submodule add "https://github.com/$repo.git" "$PACK_DIR/$name"
+        git clone --depth 1 "https://github.com/$repo.git" "$PACK_DIR/$name"
     fi
 }
 
@@ -127,5 +128,4 @@ add_plugin "3rd/diagram.nvim" "diagram.nvim"
 add_plugin "esmuellert/vscode-diff.nvim" "vscode-diff.nvim"
 
 echo ""
-echo "Done! Now run:"
-echo "  git submodule update --init --recursive"
+echo "Done! Run :helptags ALL in nvim to generate help tags."
