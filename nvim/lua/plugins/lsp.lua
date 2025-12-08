@@ -225,7 +225,7 @@ vim.lsp.enable('jsonls')
 vim.lsp.enable('taplo')
 vim.lsp.enable('html')
 vim.lsp.enable('zls')
-vim.lsp.enable('harper_ls')
+vim.lsp.enable('harper_ls', false)
 
 -- Format Python on save
 vim.api.nvim_create_autocmd('BufWritePre', {
