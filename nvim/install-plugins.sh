@@ -126,6 +126,7 @@ add_plugin "3rd/diagram.nvim" "diagram.nvim"
 
 # Other
 add_plugin "esmuellert/vscode-diff.nvim" "vscode-diff.nvim"
+add_plugin "mbbill/undotree" "undotree"
 
 echo ""
 echo "Done! Run :helptags ALL in nvim to generate help tags."
