@@ -37,7 +37,10 @@ vim.opt.fillchars:append({ vert = ' ' })
 package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua"
 package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua"
 
--- Load plugins (native pack with manual setup)
+-- Install/load plugins via vim.pack
+require("pack")
+
+-- Load plugin configs (keymaps, setup functions)
 require("plugins")
 
 -- Configure diagnostics
