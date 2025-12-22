@@ -3,6 +3,10 @@
 
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
+
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Path to your Oh My Zsh installation.
 ZSH_TMUX_FIXTERM=false
@@ -78,6 +82,10 @@ plugins=(git fzf-tab git zsh-autosuggestions fast-syntax-highlighting zsh-vi-mod
 
 source $ZSH/oh-my-zsh.sh
 
+# History configuration (override oh-my-zsh defaults)
+HISTSIZE=500000
+SAVEHIST=500000
+
 # User configuration
 
 export MANPATH="/usr/local/man:$MANPATH"
@@ -87,6 +95,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 
 # Always use nvim
 export EDITOR='nvim'
+export PAGER="nvim -R"
 
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
@@ -147,10 +156,12 @@ function _setup_zsh_enter_binding() {
       return 0
     else
       zle accept-line
+      zvm_enter_insert_mode  # Reset zsh-vi-mode state after accepting line
     fi
   }
   zle -N accept-line-or-not
-  bindkey "^M" accept-line-or-not
+  zvm_bindkey viins "^M" accept-line-or-not
+  zvm_bindkey vicmd "^M" accept-line-or-not
 }
 
 # Make sure this runs after all plugins are loaded
@@ -203,3 +214,6 @@ func argtest() {
     echo "${@:2}"
 }
 
+
+# bun completions
+[ -s "/home/daniel/.bun/_bun" ] && source "/home/daniel/.bun/_bun"
