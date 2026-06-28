@@ -95,6 +95,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 
 # Always use nvim
 export EDITOR='nvim'
+export VISUAL='nvim'
 export PAGER="nvim -R"
 
 # Compilation flags
