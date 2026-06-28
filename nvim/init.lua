@@ -17,7 +17,7 @@ opt.termguicolors = true
 opt.clipboard:append("unnamedplus")
 opt.cursorline = true
 opt.autoread = true
-opt.spell = false  -- disabled while testing harper-ls
+opt.spell = false  -- off on purpose: harper-ls handles prose spell-check (lua/plugins/lsp.lua)
 opt.spelllang = 'en_us'
 opt.conceallevel = 2
 

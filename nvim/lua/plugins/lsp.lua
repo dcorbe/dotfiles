@@ -11,6 +11,14 @@ local function on_attach(client, bufnr)
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, { buffer = bufnr, desc = 'Toggle inlay hints' })
   end
+
+  if client.name == 'harper_ls' then
+    -- Native spell is off in these buffers, so z= is otherwise dead (E756).
+    -- Point the muscle-memory key at harper's fixes: cursor on a flagged word,
+    -- press z=, pick the replacement (or "add to dictionary").
+    vim.keymap.set('n', 'z=', vim.lsp.buf.code_action,
+      { buffer = bufnr, desc = 'Harper: spelling suggestions' })
+  end
 end
 
 local capabilities = get_capabilities()
@@ -189,22 +197,25 @@ vim.lsp.config('zls', {
 -- Grammar/spelling (harper-ls)
 vim.lsp.config('harper_ls', {
   cmd = { 'harper-ls', '--stdio' },
+  filetypes = { 'markdown', 'text', 'gitcommit', 'mail' },  -- prose only, never code
   root_markers = { '.git' },
   capabilities = capabilities,
   on_attach = on_attach,
   settings = {
     ['harper-ls'] = {
       linters = {
+        -- Pure spell-check to start. Every grammar linter is off:
+        -- they were the source of the noise. Add back individually if wanted.
         spell_check = true,
         spelled_numbers = false,
-        an_a = true,
-        sentence_capitalization = true,
-        unclosed_quotes = true,
+        an_a = false,
+        sentence_capitalization = false,
+        unclosed_quotes = false,
         wrong_quotes = false,
-        long_sentences = true,
-        repeated_words = true,
-        spaces = true,
-        matcher = true,
+        long_sentences = false,
+        repeated_words = false,
+        spaces = false,            -- keep off: allows sentence-end double spaces
+        matcher = false,
       },
     },
   },
@@ -225,7 +236,7 @@ vim.lsp.enable('jsonls')
 vim.lsp.enable('taplo')
 vim.lsp.enable('html')
 vim.lsp.enable('zls')
-vim.lsp.enable('harper_ls', false)
+vim.lsp.enable('harper_ls')
 
 -- Format Python on save
 vim.api.nvim_create_autocmd('BufWritePre', {
