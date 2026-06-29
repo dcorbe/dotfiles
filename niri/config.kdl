@@ -11,6 +11,17 @@ cursor {
     hide-after-inactive-ms 2000
 }
 
+// Environment variables for processes spawned by niri.
+// niri is launched from a TTY, so XDG_SESSION_TYPE stays "tty". Chromium/Electron
+// apps key off that and fall back to Xwayland; this hint makes them pick Wayland
+// (auto = Wayland when WAYLAND_DISPLAY is set, else X11). XDG_CURRENT_DESKTOP is
+// also unset from a bare TTY login; set it so xdg-desktop-portal (screen share,
+// file pickers) and apps detect the desktop correctly.
+environment {
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    XDG_CURRENT_DESKTOP "niri"
+}
+
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
@@ -88,6 +99,14 @@ input {
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
+output "HDMI-A-1" {
+    position x=2560 y=0
+}
+
+output "HDMI-A-2" {
+    position x=0 y=0
+}
+
 /-output "eDP-1" {
     // Uncomment this line to disable this output.
     // off
@@ -270,10 +289,14 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-at-startup "waybar"
-spawn-at-startup "hypridle"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
+
+// Sleep displays after 30 minutes of inactivity (no lock screen).
+spawn-at-startup "swayidle" "-w" \
+    "timeout" "1800" "niri msg action power-off-monitors" \
+    "resume" "niri msg action power-on-monitors"
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
@@ -290,7 +313,7 @@ hotkey-overlay {
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
 // The path is formatted with strftime(3) to give you the screenshot date and time.
-screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+screenshot-path null
 
 // You can also set this to null to disable saving screenshots to disk.
 // screenshot-path null
@@ -366,7 +389,6 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Return hotkey-overlay-title="Open a Terminal: Ghostty" { spawn "ghostty"; }
     Mod+Space hotkey-overlay-title="Run an Application: wofi" { spawn-sh "wofi --show drun"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -572,9 +594,9 @@ binds {
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
-    Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    Mod+Shift+3 { spawn-sh "grim - | wl-copy"; }
+    Mod+Shift+4 { spawn-sh "grim -g \"$(slurp)\" - | wl-copy"; }
+    Mod+Shift+5 { spawn-sh "grim -g \"$(slurp)\" - | wl-copy"; }
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here
