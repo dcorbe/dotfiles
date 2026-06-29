@@ -15,6 +15,7 @@ require("which-key").setup({
     { "<leader>h", group = "harpoon" },
     { "<leader>j", group = "java" },
     { "<leader>n", group = "narrow" },
+    { "<leader>p", group = "pack" },
     { "<leader>s", group = "swap" },
     { "<leader>t", group = "toggle/test" },
     { "<leader>x", group = "trouble" },
@@ -24,3 +25,6 @@ require("which-key").setup({
 local map = vim.keymap.set
 map("n", "<leader>?", function() require("which-key").show({ global = false }) end, { desc = "Buffer local keymaps" })
 map("n", "<leader><leader>", function() require("which-key").show() end, { desc = "Show all keybinds" })
+
+-- Pack management
+map("n", "<leader>pu", function() vim.pack.update() end, { desc = "Update plugins" })
