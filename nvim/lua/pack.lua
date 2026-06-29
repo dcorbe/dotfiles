@@ -14,7 +14,7 @@ vim.pack.add({
 
   -- Treesitter
   'https://github.com/nvim-treesitter/nvim-treesitter',
-  'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects', version = 'main' },
 
   -- LSP & Mason
   'https://github.com/neovim/nvim-lspconfig',
@@ -29,10 +29,6 @@ vim.pack.add({
   'https://github.com/hrsh7th/cmp-nvim-lsp-signature-help',
   'https://github.com/L3MON4D3/LuaSnip',
   'https://github.com/saadparwaiz1/cmp_luasnip',
-
-  -- Copilot
-  'https://github.com/zbirenbaum/copilot.lua',
-  'https://github.com/zbirenbaum/copilot-cmp',
 
   -- UI
   'https://github.com/nvim-lualine/lualine.nvim',
@@ -54,7 +50,7 @@ vim.pack.add({
 
   -- Navigation & Search
   'https://github.com/ibhagwan/fzf-lua',
-  'https://github.com/ThePrimeagen/harpoon',
+  { src = 'https://github.com/ThePrimeagen/harpoon', version = 'harpoon2' },
   'https://github.com/folke/flash.nvim',
   'https://github.com/stevearc/oil.nvim',
   'https://github.com/nvim-pack/nvim-spectre',

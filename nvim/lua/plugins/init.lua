@@ -16,7 +16,6 @@ require("plugins.textobjects")
 require("plugins.mason")
 require("plugins.lsp")
 require("plugins.cmp")
-require("plugins.copilot")
 
 -- UI
 require("plugins.lualine")

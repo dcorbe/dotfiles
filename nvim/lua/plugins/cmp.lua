@@ -2,9 +2,6 @@
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 
--- Setup copilot-cmp
-require("copilot_cmp").setup()
-
 -- Track if completions are enabled (default: true)
 local cmp_enabled = true
 
@@ -60,7 +57,6 @@ cmp.setup({
     end, { 'i', 's' }),
   }),
   sources = cmp.config.sources({
-    { name = "copilot", group_index = 2 },
     { name = "nvim_lsp", group_index = 2 },
     { name = "nvim_lsp_signature_help", group_index = 2 },
     { name = "luasnip", group_index = 2 },
@@ -79,7 +75,6 @@ cmp.setup({
       end
 
       vim_item.menu = ({
-        copilot = "[Copilot]",
         nvim_lsp = "[LSP]",
         nvim_lsp_signature_help = "[Sig]",
         luasnip = "[Snip]",
