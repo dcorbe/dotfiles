@@ -37,6 +37,18 @@ vim.opt.fillchars:append({ vert = ' ' })
 package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua"
 package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua"
 
+-- Silence the "client.is_stopped is deprecated" warning emitted by outdated
+-- plugins (nvim-lspconfig, copilot-cmp, nvim-colorizer) that still call the
+-- function-style client.is_stopped() instead of the client:is_stopped() method.
+-- Every other deprecation warning is left intact (important on this nvim -dev build).
+local orig_deprecate = vim.deprecate
+vim.deprecate = function(name, ...)
+  if name == "client.is_stopped" then
+    return
+  end
+  return orig_deprecate(name, ...)
+end
+
 -- Install/load plugins via vim.pack
 require("pack")
 
