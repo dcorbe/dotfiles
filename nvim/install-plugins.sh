@@ -99,7 +99,7 @@ add_plugin "gbprod/yanky.nvim" "yanky.nvim"
 # UI
 add_plugin "dracula/vim" "dracula"
 add_plugin "nvim-lualine/lualine.nvim" "lualine.nvim"
-add_plugin "goolord/alpha-nvim" "alpha-nvim"
+add_plugin "folke/snacks.nvim" "snacks.nvim"
 add_plugin "MaximilianLloyd/ascii.nvim" "ascii.nvim"
 add_plugin "folke/which-key.nvim" "which-key.nvim"
 add_plugin "folke/trouble.nvim" "trouble.nvim"

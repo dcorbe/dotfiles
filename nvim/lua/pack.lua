@@ -33,7 +33,7 @@ vim.pack.add({
   -- UI
   'https://github.com/nvim-lualine/lualine.nvim',
   'https://github.com/folke/which-key.nvim',
-  'https://github.com/goolord/alpha-nvim',
+  'https://github.com/folke/snacks.nvim',
   'https://github.com/folke/trouble.nvim',
   'https://github.com/folke/todo-comments.nvim',
   'https://github.com/chentoast/marks.nvim',

@@ -20,7 +20,7 @@ require("plugins.cmp")
 -- UI
 require("plugins.lualine")
 require("plugins.which-key")
-require("plugins.alpha")
+require("plugins.snacks-dashboard")
 require("plugins.trouble")
 require("plugins.todo-comments")
 require("plugins.marks")
