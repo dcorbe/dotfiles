@@ -48,4 +48,5 @@ require("snacks").setup({
 })
 
 -- Start the animation. Hooks SnacksDashboardOpened; splash must match the seed.
-milli.snacks({ splash = splash })
+-- loop=true replays continuously (without it, runtime.play stops after one pass).
+milli.snacks({ splash = splash, loop = true })
