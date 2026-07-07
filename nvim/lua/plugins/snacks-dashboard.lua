@@ -1,17 +1,24 @@
--- Snacks dashboard with milli.nvim animated ASCII splash header.
+-- Snacks dashboard header: on each launch, randomly pick EITHER an animated
+-- milli.nvim splash OR a static ascii.nvim piece.
 local milli = require("milli")
+local ascii = require("ascii")
 
--- Pick a random animated splash once per launch (keeps the old random-art
--- behavior, now animated). The SAME splash name must feed both the header seed
--- and milli.snacks() below, so milli's anchor-search can locate frame 0 in the
--- dashboard buffer and animate over it.
 math.randomseed(os.time())
-local splashes = milli.list()
-local splash = splashes[math.random(#splashes)]
 
--- Seed the header with frame 0 of the chosen splash. frames[1] is a list of
--- lines; snacks wants a single string.
-local header = table.concat(milli.load({ splash = splash }).frames[1], "\n")
+-- `splash` stays nil for the static ascii case. When set, it names the milli
+-- splash and must feed both the header seed (frame 0) and milli.snacks() below,
+-- so milli's anchor-search can locate frame 0 in the dashboard buffer.
+local splash
+local header
+if math.random(2) == 1 then
+  -- Animated milli splash. frames[1] is a list of lines; snacks wants a string.
+  local splashes = milli.list()
+  splash = splashes[math.random(#splashes)]
+  header = table.concat(milli.load({ splash = splash }).frames[1], "\n")
+else
+  -- Static random ascii.nvim art. get_random_global() returns a list of lines.
+  header = table.concat(ascii.get_random_global(), "\n")
+end
 
 -- Footer: count installed plugins in the vim.pack opt directory.
 -- A whole section may be a function (snacks resolves it by calling it), but the
@@ -47,6 +54,9 @@ require("snacks").setup({
   },
 })
 
--- Start the animation. Hooks SnacksDashboardOpened; splash must match the seed.
--- loop=true replays continuously (without it, runtime.play stops after one pass).
-milli.snacks({ splash = splash, loop = true })
+-- Start the animation only when a milli splash was chosen. Hooks
+-- SnacksDashboardOpened; splash matches the seeded header. loop=true replays
+-- continuously (without it, runtime.play stops after one pass).
+if splash then
+  milli.snacks({ splash = splash, loop = true })
+end
