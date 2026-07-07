@@ -1,14 +1,19 @@
--- Snacks dashboard (replaces alpha-nvim)
-local ascii = require("ascii")
+-- Snacks dashboard with milli.nvim animated ASCII splash header.
+local milli = require("milli")
 
--- Random ASCII art header, chosen once per launch (matches old alpha behavior).
--- get_random_global() returns a table of lines; snacks wants a single string.
-local header = table.concat(ascii.get_random_global(), "\n")
+-- Pick a random animated splash once per launch (keeps the old random-art
+-- behavior, now animated). The SAME splash name must feed both the header seed
+-- and milli.snacks() below, so milli's anchor-search can locate frame 0 in the
+-- dashboard buffer and animate over it.
+math.randomseed(os.time())
+local splashes = milli.list()
+local splash = splashes[math.random(#splashes)]
+
+-- Seed the header with frame 0 of the chosen splash. frames[1] is a list of
+-- lines; snacks wants a single string.
+local header = table.concat(milli.load({ splash = splash }).frames[1], "\n")
 
 -- Footer: count installed plugins in the vim.pack opt directory.
--- (The old alpha footer pointed at config/pack/plugins/start, which does not
--- exist under vim.pack, so it always reported 0.)
---
 -- A whole section may be a function (snacks resolves it by calling it), but the
 -- `text` field within must be a string or Text[], never a function.
 local function footer_section()
@@ -41,3 +46,6 @@ require("snacks").setup({
     },
   },
 })
+
+-- Start the animation. Hooks SnacksDashboardOpened; splash must match the seed.
+milli.snacks({ splash = splash })

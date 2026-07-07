@@ -101,6 +101,10 @@
       "rev": "2a6940af80375532e5e9e7c1f2fc6319a1b7a69d",
       "src": "https://github.com/williamboman/mason.nvim"
     },
+    "milli.nvim": {
+      "rev": "6e94122fcc783bcee7d30b05cedc53beddb01104",
+      "src": "https://github.com/Amansingh-afk/milli.nvim"
+    },
     "mini.ai": {
       "rev": "cb20f298ebf5ae91924cd0c6c310712de2ef4086",
       "src": "https://github.com/echasnovski/mini.ai"

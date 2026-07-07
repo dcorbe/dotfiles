@@ -34,6 +34,7 @@ vim.pack.add({
   'https://github.com/nvim-lualine/lualine.nvim',
   'https://github.com/folke/which-key.nvim',
   'https://github.com/folke/snacks.nvim',
+  'https://github.com/Amansingh-afk/milli.nvim',
   'https://github.com/folke/trouble.nvim',
   'https://github.com/folke/todo-comments.nvim',
   'https://github.com/chentoast/marks.nvim',
