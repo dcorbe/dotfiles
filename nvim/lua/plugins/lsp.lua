@@ -20,6 +20,10 @@ local function on_attach(client, bufnr)
     -- press z=, pick the replacement (or "add to dictionary").
     vim.keymap.set('n', 'z=', vim.lsp.buf.code_action,
       { buffer = bufnr, desc = 'Harper: spelling suggestions' })
+
+    -- Quiet display: underline only. No signs, no virtual text.
+    local ns = vim.lsp.diagnostic.get_namespace(client.id)
+    vim.diagnostic.config({ underline = true, signs = false, virtual_text = false }, ns)
   end
 end
 
@@ -203,8 +207,24 @@ vim.lsp.config('harper_ls', {
   root_markers = { '.git' },
   capabilities = capabilities,
   on_attach = on_attach,
+  handlers = {
+    -- Spelling only. Harper ships 100+ linters that default on; disabling them
+    -- by name is a losing game (new ones arrive default-on with upgrades), so
+    -- drop everything that isn't a SpellCheck diagnostic at the client.
+    ['textDocument/publishDiagnostics'] = function(err, result, ctx)
+      if result and result.diagnostics then
+        result.diagnostics = vim.tbl_filter(function(d)
+          return d.code == 'SpellCheck'
+        end, result.diagnostics)
+      end
+      return vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
+    end,
+  },
   settings = {
     ['harper-ls'] = {
+      -- Inside the dotfiles repo, so z= "add to dictionary" entries are
+      -- persistent and committable.
+      userDictPath = vim.fn.expand('~/.config/harper-ls/dictionary.txt'),
       linters = {
         -- Pure spell-check to start. Every grammar linter is off:
         -- they were the source of the noise. Add back individually if wanted.
