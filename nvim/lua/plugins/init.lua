@@ -12,10 +12,10 @@ require("plugins.dracula")
 require("plugins.treesitter")
 require("plugins.textobjects")
 
--- LSP & Completion
+-- LSP & Completion (blink before lsp: lsp.lua reads blink's capabilities)
 require("plugins.mason")
+require("plugins.blink")
 require("plugins.lsp")
-require("plugins.cmp")
 
 -- UI
 require("plugins.lualine")
