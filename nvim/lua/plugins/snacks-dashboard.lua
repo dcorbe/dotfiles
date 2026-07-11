@@ -1,23 +1,48 @@
--- Snacks dashboard header: on each launch, randomly pick EITHER an animated
--- milli.nvim splash OR a static ascii.nvim piece.
+-- Snacks dashboard header: on each launch, randomly pick an animated
+-- milli.nvim splash, a static ascii.nvim piece, or a truecolor ANSI art
+-- from ansi-art/. Normal buffers don't interpret escape sequences, so the
+-- ANSI case renders through a snacks `terminal` section instead of the
+-- header. Set NVIM_DASH=milli|ascii|ansi to force a branch.
 local milli = require("milli")
 local ascii = require("ascii")
 
 math.randomseed(os.time())
 
--- `splash` stays nil for the static ascii case. When set, it names the milli
+local ansi_files =
+  vim.fn.globpath(vim.fn.stdpath("config") .. "/ansi-art", "*.ans", false, true)
+
+-- `splash` stays nil unless the milli branch wins. When set, it names the milli
 -- splash and must feed both the header seed (frame 0) and milli.snacks() below,
 -- so milli's anchor-search can locate frame 0 in the dashboard buffer.
 local splash
 local header
-if math.random(2) == 1 then
+local art_section
+
+local choice = ({ milli = 1, ascii = 2, ansi = 3 })[vim.env.NVIM_DASH]
+  or math.random(#ansi_files > 0 and 3 or 2)
+if choice == 3 and #ansi_files == 0 then
+  choice = 2
+end
+
+if choice == 1 then
   -- Animated milli splash. frames[1] is a list of lines; snacks wants a string.
   local splashes = milli.list()
   splash = splashes[math.random(#splashes)]
   header = table.concat(milli.load({ splash = splash }).frames[1], "\n")
-else
+elseif choice == 2 then
   -- Static random ascii.nvim art. get_random_global() returns a list of lines.
   header = table.concat(ascii.get_random_global(), "\n")
+else
+  -- Random ANSI art piece. Terminal sections need an explicit height (snacks
+  -- can't measure command output); the trailing sleep keeps cat's output from
+  -- racing the terminal setup.
+  local art = ansi_files[math.random(#ansi_files)]
+  art_section = {
+    section = "terminal",
+    cmd = "cat " .. vim.fn.shellescape(art) .. "; sleep .1",
+    height = #vim.fn.readfile(art),
+    padding = 1,
+  }
 end
 
 -- Footer: count installed plugins in the vim.pack opt directory.
@@ -47,7 +72,7 @@ require("snacks").setup({
       },
     },
     sections = {
-      { section = "header" },
+      art_section or { section = "header" },
       { section = "keys", gap = 1, padding = 1 },
       footer_section,
     },
