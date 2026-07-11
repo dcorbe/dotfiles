@@ -58,6 +58,13 @@ local function footer_section()
   }
 end
 
+-- Snacks links SnacksDashboardHeader -> Title, which dracula renders as bold
+-- green. Link to Normal instead for the plain foreground the alpha dashboard
+-- had (its AlphaHeader group was never defined, so it fell through to Normal).
+-- Snacks sets its links with default = true, so this wins. Must run after
+-- the colorscheme loads (plugins.dracula precedes this file in init).
+vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { link = "Normal" })
+
 require("snacks").setup({
   dashboard = {
     enabled = true,
