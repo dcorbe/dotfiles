@@ -98,8 +98,10 @@ vim.diagnostic.config({
 
 
 -- This comes last
-vim.cmd[[highlight Normal guibg=#22212B ctermbg=235]]
-vim.cmd[[highlight CursorLineNr guifg=#ff79c6 ctermfg=212]]
+-- No background fill: inherit the terminal's background (see also
+-- g:dracula_colorterm=0 in plugins/dracula.lua)
+vim.cmd[[highlight Normal guibg=NONE ctermbg=NONE]]
+vim.cmd[[highlight CursorLineNr guifg=#FF80BF ctermfg=212]]
 vim.cmd[[highlight CursorLine guibg=NONE ctermbg=NONE]]
 
 -- Keymaps moved to lua/plugins/fzf-lua.lua
