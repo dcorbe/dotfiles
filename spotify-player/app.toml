@@ -19,12 +19,14 @@ page_size_in_rows = 20
 play_icon = "▶"
 pause_icon = "▌▌"
 liked_icon = "♥"
-border_type = "Plain"
+border_type = "Hidden"
 progress_bar_type = "Rectangle"
 progress_bar_position = "Bottom"
 genre_num = 2
-cover_img_length = 9
-cover_img_width = 5
+# Both zero = cover art disabled. The Arch build compiles in image support
+# with no off-switch; a zero-area image box is the sanctioned starvation hack.
+cover_img_length = 0
+cover_img_width = 0
 cover_img_scale = 1.0
 enable_media_control = true
 enable_streaming = "Always"
