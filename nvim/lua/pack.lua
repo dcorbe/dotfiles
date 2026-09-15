@@ -54,7 +54,6 @@ vim.pack.add({
   'https://github.com/nvim-pack/nvim-spectre',
 
   -- Text manipulation
-  'https://github.com/numToStr/Comment.nvim',
   'https://github.com/tpope/vim-surround',
   'https://github.com/junegunn/vim-easy-align',
   'https://github.com/windwp/nvim-autopairs',

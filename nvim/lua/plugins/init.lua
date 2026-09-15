@@ -43,7 +43,6 @@ require("plugins.oil")
 require("plugins.spectre")
 
 -- Text manipulation
-require("plugins.comment")
 require("plugins.surround")
 require("plugins.easyalign")
 require("plugins.autopairs")
