@@ -20,7 +20,6 @@ System packages needed for the LSP configuration.
 | taplo | `taplo` | - | `brew install taplo` |
 | vscode-html-language-server | - | `vscode-langservers-extracted` | `npm install -g vscode-langservers-extracted` |
 | zls | `zls` | - | `brew install zls` |
-| harper-ls | - | `harper` | `brew install harper` |
 | rust-analyzer | `rust-analyzer` | - | `brew install rust-analyzer` |
 | roslyn + rzls | (via Mason) | - | (via Mason) |
 | jdtls | - | `jdtls` | `brew install jdtls` |
@@ -36,14 +35,14 @@ pacman -S lua-language-server ruff clang gopls taplo zls rust-analyzer
 
 AUR:
 ```bash
-yay -S vtsls basedpyright vscode-langservers-extracted yaml-language-server tailwindcss-language-server dockerfile-language-server harper jdtls
+yay -S vtsls basedpyright vscode-langservers-extracted yaml-language-server tailwindcss-language-server dockerfile-language-server jdtls
 ```
 
 ### macOS
 
 Homebrew:
 ```bash
-brew install lua-language-server basedpyright ruff llvm gopls taplo zls harper rust-analyzer jdtls
+brew install lua-language-server basedpyright ruff llvm gopls taplo zls rust-analyzer jdtls
 ```
 
 npm:

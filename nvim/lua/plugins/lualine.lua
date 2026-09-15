@@ -21,7 +21,7 @@ require('lualine').setup {
   },
   sections = {
     lualine_a = {'mode'},
-    -- error/warn only: hint-severity spell flags (harper) stay off the statusline
+    -- error/warn only: hints stay off the statusline
     lualine_b = {'branch', 'diff', { 'diagnostics', sections = { 'error', 'warn' } }},
     lualine_c = {'filename'},
     lualine_x = {'encoding', 'fileformat', 'filetype'},

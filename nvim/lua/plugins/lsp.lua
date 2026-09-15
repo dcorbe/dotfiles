@@ -13,18 +13,6 @@ local function on_attach(client, bufnr)
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, { buffer = bufnr, desc = 'Toggle inlay hints' })
   end
-
-  if client.name == 'harper_ls' then
-    -- Native spell is off in these buffers, so z= is otherwise dead (E756).
-    -- Point the muscle-memory key at harper's fixes: cursor on a flagged word,
-    -- press z=, pick the replacement (or "add to dictionary").
-    vim.keymap.set('n', 'z=', vim.lsp.buf.code_action,
-      { buffer = bufnr, desc = 'Harper: spelling suggestions' })
-
-    -- Quiet display: underline only. No signs, no virtual text.
-    local ns = vim.lsp.diagnostic.get_namespace(client.id)
-    vim.diagnostic.config({ underline = true, signs = false, virtual_text = false }, ns)
-  end
 end
 
 local capabilities = get_capabilities()
@@ -200,49 +188,6 @@ vim.lsp.config('zls', {
   },
 })
 
--- Grammar/spelling (harper-ls)
-vim.lsp.config('harper_ls', {
-  cmd = { 'harper-ls', '--stdio' },
-  filetypes = { 'markdown', 'text', 'gitcommit', 'mail' },  -- prose only, never code
-  root_markers = { '.git' },
-  capabilities = capabilities,
-  on_attach = on_attach,
-  handlers = {
-    -- Spelling only. Harper ships 100+ linters that default on; disabling them
-    -- by name is a losing game (new ones arrive default-on with upgrades), so
-    -- drop everything that isn't a SpellCheck diagnostic at the client.
-    ['textDocument/publishDiagnostics'] = function(err, result, ctx)
-      if result and result.diagnostics then
-        result.diagnostics = vim.tbl_filter(function(d)
-          return d.code == 'SpellCheck'
-        end, result.diagnostics)
-      end
-      return vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
-    end,
-  },
-  settings = {
-    ['harper-ls'] = {
-      -- Inside the dotfiles repo, so z= "add to dictionary" entries are
-      -- persistent and committable.
-      userDictPath = vim.fn.expand('~/.config/harper-ls/dictionary.txt'),
-      linters = {
-        -- Pure spell-check to start. Every grammar linter is off:
-        -- they were the source of the noise. Add back individually if wanted.
-        spell_check = true,
-        spelled_numbers = false,
-        an_a = false,
-        sentence_capitalization = false,
-        unclosed_quotes = false,
-        wrong_quotes = false,
-        long_sentences = false,
-        repeated_words = false,
-        spaces = false,            -- keep off: allows sentence-end double spaces
-        matcher = false,
-      },
-    },
-  },
-})
-
 -- Enable servers (Rust/C# handled by dedicated plugins)
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('vtsls')
@@ -258,7 +203,6 @@ vim.lsp.enable('jsonls')
 vim.lsp.enable('taplo')
 vim.lsp.enable('html')
 vim.lsp.enable('zls')
-vim.lsp.enable('harper_ls')
 
 -- Format Python on save
 vim.api.nvim_create_autocmd('BufWritePre', {

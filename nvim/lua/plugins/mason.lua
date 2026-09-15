@@ -46,7 +46,6 @@ require("mason-lspconfig").setup({
     "html",
     "zls",
     "jdtls",
-    "harper_ls",
   },
   automatic_installation = true,
 })
