@@ -22,6 +22,15 @@ environment {
     XDG_CURRENT_DESKTOP "niri"
 }
 
+// zeus: LG 27GL850 is G-Sync Compatible. Matched by make/model/serial so this
+// shared config doesn't touch apollo's outputs.
+// VRR is on-demand: always-on VRR pins the RTX 3090's memory clock at max
+// (P0, ~113 W idle vs ~33 W). A window rule below enables it for games.
+output "LG Electronics 27GL850 910NTCZ32379" {
+    mode "2560x1440@144.000"
+    variable-refresh-rate on-demand=true
+}
+
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
@@ -310,6 +319,13 @@ window-rule {
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
+}
+
+// Turn on VRR (on-demand, see the output block) while a Steam/Proton game is
+// visible, e.g. Gray Zone Warfare is "steam_app_2479810".
+window-rule {
+    match app-id=r#"^steam_app_"#
+    variable-refresh-rate true
 }
 
 binds {
