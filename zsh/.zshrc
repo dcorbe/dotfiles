@@ -4,6 +4,7 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
+export PATH="$HOME/.dotnet:$PATH"
 
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
@@ -96,7 +97,6 @@ export MANPATH="/usr/local/man:$MANPATH"
 # Always use nvim
 export EDITOR='nvim'
 export VISUAL='nvim'
-export PAGER="nvim -R"
 
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
@@ -215,6 +215,24 @@ func argtest() {
     echo "${@:2}"
 }
 
+
+# 1Password CLI: keep the standalone session alive across the 30-min idle timeout.
+#
+# Standalone `op` mints an OP_SESSION_<uuid> token with a fixed 30-minute idle
+# expiry. Once it expires server-side, the env var still holds the dead token,
+# so bare `op` re-auths inline for one command only and never refreshes the var
+# -> a password prompt on every command. This wrapper re-signs through
+# `eval $(op signin)` when the session is dead, installing a fresh token back
+# into the live shell (zsh functions don't fork, so the eval persists). The
+# `op whoami` guard fails without prompting on an expired token, so it detects
+# expiry cleanly. Bounds: 30-min idle is not configurable in standalone mode,
+# and tokens are per-shell -- each new terminal costs one prompt per idle window.
+op() {
+  if ! command op whoami >/dev/null 2>&1; then
+    eval "$(command op signin --account my)"
+  fi
+  command op "$@"
+}
 
 # bun completions
 [ -s "/home/daniel/.bun/_bun" ] && source "/home/daniel/.bun/_bun"
