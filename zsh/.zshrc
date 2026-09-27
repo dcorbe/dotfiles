@@ -170,24 +170,26 @@ autoload -U add-zsh-hook
 add-zsh-hook precmd _setup_zsh_enter_binding
 
 # Beautify ls
+# oh-my-zsh aliases ls to 'ls --color=tty', which would feed eza an invalid --color value
+unalias ls 2>/dev/null
 func ls() {
     if [[ ! (( $#commands[eza] )) ]]
     then
         /bin/ls $@
     elif [[ $1 == "size" ]]
     then
-        ls-bysize --icons ${@:2}
+        ls-bysize --icons=auto ${@:2}
     elif [[ $1 == "atime" ]]
     then
-        ls-byatime --icons ${@:2}
+        ls-byatime --icons=auto ${@:2}
     elif [[ $1 == "mtime" ]]
     then
-        ls-bymtime --icons ${@:2}
+        ls-bymtime --icons=auto ${@:2}
     elif [[ $1 == "ctime" ]]
     then
-        ls-byctime --icons ${@:2}
+        ls-byctime --icons=auto ${@:2}
     else
-        eza -h --group-directories-first --icons -g $@ --git --color always
+        eza -h --group-directories-first --icons=auto -g $@ --git --color always
     fi
 }
 
